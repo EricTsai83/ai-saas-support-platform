@@ -10,6 +10,13 @@ import { api } from "@workspace/backend/_generated/api";
 import { Button } from "@workspace/ui/components/button";
 import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
+/**
+ * Renders the page UI that shows user data and controls when authenticated, and a sign-in prompt when not.
+ *
+ * When authenticated, queries and displays the list of users, shows a Clerk UserButton, and provides an "Add User" button that invokes the backend add-user mutation. When unauthenticated, shows a prompt and a Sign In button.
+ *
+ * @returns The component's React element tree.
+ */
 export default function Page() {
   const users = useQuery(api.user.getMany);
   const addUser = useMutation(api.user.add);
