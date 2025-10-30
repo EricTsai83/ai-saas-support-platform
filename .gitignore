@@ -37,3 +37,6 @@ npm-debug.log*
 
 # Pnpm store
 .pnpm-store
+
+# Sentry
+.env.sentry-build-plugin
