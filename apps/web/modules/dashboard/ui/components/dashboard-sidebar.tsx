@@ -148,7 +148,7 @@ export function DashboardSidebar() {
                   >
                     <Link href={item.url}>
                       <item.icon className="size-4" />
-                      <span className="truncate">{item.title}</span>
+                      <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
