@@ -115,10 +115,14 @@ export function DashboardSidebar() {
                     asChild
                     isActive={isActive(item.url)}
                     tooltip={item.title}
+                    className={cn(
+                      isActive(item.url) &&
+                        "bg-linear-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!",
+                    )}
                   >
                     <Link href={item.url}>
                       <item.icon className="size-4" />
-                      <span className="truncate">{item.title}</span>
+                      <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -137,6 +141,10 @@ export function DashboardSidebar() {
                     asChild
                     isActive={isActive(item.url)}
                     tooltip={item.title}
+                    className={cn(
+                      isActive(item.url) &&
+                        "bg-linear-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!",
+                    )}
                   >
                     <Link href={item.url}>
                       <item.icon className="size-4" />
@@ -159,11 +167,15 @@ export function DashboardSidebar() {
                   <SidebarMenuButton
                     asChild
                     isActive={isActive(item.url)}
+                    className={cn(
+                      isActive(item.url) &&
+                        "bg-linear-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!",
+                    )}
                     tooltip={item.title}
                   >
                     <Link href={item.url}>
                       <item.icon className="size-4" />
-                      <span className="truncate">{item.title}</span>
+                      <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
