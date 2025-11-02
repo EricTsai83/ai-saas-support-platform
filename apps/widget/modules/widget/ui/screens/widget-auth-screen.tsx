@@ -15,16 +15,22 @@ import { useForm } from "react-hook-form";
 import { api } from "@workspace/backend/_generated/api";
 import { useMutation } from "convex/react";
 import { Doc } from "@workspace/backend/_generated/dataModel";
+import { useAtomValue, useSetAtom } from "jotai";
+import {
+  contactSessionIdAtomFamily,
+  organizationIdAtom,
+} from "@/modules/widget/atoms/widget-atoms";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
 });
 
-// !important: This is a temporary organization ID, before we add state management.
-const organizationId = "org_2Yw5m456789012345678901";
-
 export function WidgetAuthScreen() {
+  const organizationId = useAtomValue(organizationIdAtom);
+  const setContactSessionId = useSetAtom(
+    contactSessionIdAtomFamily(organizationId ?? ""),
+  );
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,7 +63,8 @@ export function WidgetAuthScreen() {
       organizationId,
       metadata,
     });
-    console.log({ contactSessionId });
+
+    setContactSessionId(contactSessionId);
   };
 
   return (
