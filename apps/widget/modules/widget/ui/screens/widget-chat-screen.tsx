@@ -14,6 +14,7 @@ import {
 import { WidgetHeader } from "@/modules/widget/ui/components/widget-header";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowLeftIcon, MenuIcon } from "lucide-react";
+import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import { useQuery, useAction } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { Form, FormField } from "@workspace/ui/components/form";
@@ -138,7 +139,13 @@ export const WidgetChatScreen = () => {
               <AIMessageContent>
                 <AIResponse>{message.text}</AIResponse>
               </AIMessageContent>
-              {/* TODO: Add Avatar component */}
+              {message.role === "assistant" && (
+                <DicebearAvatar
+                  imageUrl="/logo.svg"
+                  seed="assistant"
+                  size={32}
+                />
+              )}
             </AIMessage>
           ))}
         </AIConversationContent>
