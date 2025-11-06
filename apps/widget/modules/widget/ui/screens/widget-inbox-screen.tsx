@@ -9,11 +9,14 @@ import {
   organizationIdAtom,
   screenAtom,
 } from "@/modules/widget/atoms/widget-atoms";
+import { ConversationStatusIcon } from "@workspace/ui/components/conversation-status-icon";
 import { WidgetHeader } from "@/modules/widget/ui/components/widget-header";
 import { WidgetFooter } from "@/modules/widget/ui/components/widget-footer";
 import { Button } from "@workspace/ui/components/button";
 import { api } from "@workspace/backend/_generated/api";
 import { usePaginatedQuery } from "convex/react";
+import { useInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
+import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 
 export const WidgetInboxScreen = () => {
   const setScreen = useSetAtom(screenAtom);
@@ -30,6 +33,13 @@ export const WidgetInboxScreen = () => {
       initialNumItems: 10,
     },
   );
+
+  const { topElementRef, handleLoadMore, canLoadMore, isLoadingMore } =
+    useInfiniteScroll({
+      status: conversations.status,
+      loadMore: conversations.loadMore,
+      loadSize: 10,
+    });
 
   return (
     <>
@@ -67,10 +77,17 @@ export const WidgetInboxScreen = () => {
                 <p className="truncate text-sm">
                   {conversation.lastMessage?.text}
                 </p>
+                <ConversationStatusIcon status={conversation.status} />
               </div>
             </div>
           </Button>
         ))}
+        <InfiniteScrollTrigger
+          canLoadMore={canLoadMore}
+          isLoadingMore={isLoadingMore}
+          onLoadMore={handleLoadMore}
+          ref={topElementRef}
+        />
       </div>
       <WidgetFooter />
     </>
