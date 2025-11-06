@@ -16,7 +16,7 @@ const statusConfig = {
     bgColor: "bg-destructive",
   },
   escalated: {
-    icon: ArrowRightIcon,
+    icon: ArrowUpIcon,
     bgColor: "bg-yellow-500",
   },
 } as const;
