@@ -24,9 +24,8 @@ export const DicebearAvatar = ({
   badgeImageUrl,
 }: DicebearAvatarProps) => {
   const avatarSrc = useMemo(() => {
-    if (imageUrl) {
-      return imageUrl;
-    }
+    if (imageUrl) return imageUrl;
+
     const avatar = createAvatar(glass, {
       seed: seed.toLowerCase().trim(),
       size,
