@@ -35,10 +35,6 @@ import {
   AIMessageContent,
 } from "@workspace/ui/components/ai/message";
 import { AIResponse } from "@workspace/ui/components/ai/response";
-import {
-  AISuggestion,
-  AISuggestions,
-} from "@workspace/ui/components/ai/suggestion";
 import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 import { useInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
 
@@ -71,7 +67,7 @@ export const WidgetChatScreen = () => {
   );
 
   const messages = useThreadMessages(
-    api.public.message.getMany,
+    api.public.messages.getMany,
     conversation?.threadId && contactSessionId
       ? {
           threadId: conversation.threadId,
@@ -97,7 +93,7 @@ export const WidgetChatScreen = () => {
     },
   });
 
-  const createMessage = useAction(api.public.message.create);
+  const createMessage = useAction(api.public.messages.create);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!conversationId || !contactSessionId || !conversation) return;
 

@@ -9,9 +9,10 @@
  */
 
 import type * as private_conversations from "../private/conversations.js";
+import type * as private_messages from "../private/messages.js";
 import type * as public_contactSessions from "../public/contactSessions.js";
 import type * as public_conversations from "../public/conversations.js";
-import type * as public_message from "../public/message.js";
+import type * as public_messages from "../public/messages.js";
 import type * as public_organizations from "../public/organizations.js";
 import type * as system_ai_agents_supportAgent from "../system/ai/agents/supportAgent.js";
 import type * as system_contactSession from "../system/contactSession.js";
@@ -34,9 +35,10 @@ import type {
  */
 declare const fullApi: ApiFromModules<{
   "private/conversations": typeof private_conversations;
+  "private/messages": typeof private_messages;
   "public/contactSessions": typeof public_contactSessions;
   "public/conversations": typeof public_conversations;
-  "public/message": typeof public_message;
+  "public/messages": typeof public_messages;
   "public/organizations": typeof public_organizations;
   "system/ai/agents/supportAgent": typeof system_ai_agents_supportAgent;
   "system/contactSession": typeof system_contactSession;
