@@ -127,7 +127,14 @@ export const WidgetChatScreen = () => {
             onLoadMore={handleLoadMore}
             ref={topElementRef}
           />
-          {toUIMessages(messages.results ?? []).map((message) => (
+          {toUIMessages(
+            (messages.results ?? []).filter(
+              (message) =>
+                message.message?.role !== "tool" &&
+                !message.tool &&
+                message.status === "success", // if message is not success, it means it's still processing
+            ),
+          ).map((message) => (
             <AIMessage
               from={message.role === "user" ? "user" : "assistant"}
               key={message.id}
