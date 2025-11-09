@@ -121,7 +121,10 @@ export const ConversationIdView = ({
         <AIConversationContent>
           {toUIMessages(
             (messages.results ?? []).filter(
-              (message) => message.message?.role !== "tool" && !message.tool,
+              (message) =>
+                message.message?.role !== "tool" &&
+                !message.tool &&
+                message.status === "success", // if message is not success, it means it's still processing
             ),
           ).map((message) => (
             <AIMessage
