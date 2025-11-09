@@ -2,7 +2,7 @@
 
 import { useThreadMessages, toUIMessages } from "@convex-dev/agent/react";
 import { api } from "@workspace/backend/_generated/api";
-import { Id } from "@workspace/backend/_generated/dataModel";
+import { Doc, Id } from "@workspace/backend/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { MoreHorizontalIcon, Wand2Icon } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
@@ -29,6 +29,8 @@ import {
   AIMessageContent,
 } from "@workspace/ui/components/ai/message";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
+import { ConversationStatusButton } from "../components/conversation-status-button";
+import { useState } from "react";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -70,16 +72,58 @@ export const ConversationIdView = ({
     }
   };
 
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const updateConversationStatus = useMutation(
+    api.private.conversations.updateStatus,
+  );
+  const handleToggleStatus = async () => {
+    if (!conversation) return;
+
+    setIsUpdatingStatus(true);
+
+    let newStatus: Doc<"conversations">["status"] = conversation.status;
+
+    if (conversation.status === "unresolved") {
+      newStatus = "escalated";
+    } else if (conversation.status === "escalated") {
+      newStatus = "resolved";
+    } else {
+      newStatus = "unresolved";
+    }
+
+    try {
+      await updateConversationStatus({
+        conversationId,
+        status: newStatus,
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsUpdatingStatus(false);
+    }
+  };
+
   return (
     <div className="flex h-full flex-col bg-muted">
       <header className="flex items-center justify-between border-b bg-background p-2.5">
         <Button size="icon-sm" variant="ghost">
           <MoreHorizontalIcon />
         </Button>
+        {!!conversation && (
+          <ConversationStatusButton
+            status={conversation?.status}
+            onClick={handleToggleStatus}
+            disabled={isUpdatingStatus}
+          />
+        )}
       </header>
       <AIConversation className="max-h-[calc(100vh-180px)]">
         <AIConversationContent>
-          {toUIMessages(messages.results ?? [])?.map((message) => (
+          {toUIMessages(
+            (messages.results ?? []).filter(
+              (message) => message.message?.role !== "tool" && !message.tool,
+            ),
+          ).map((message) => (
             <AIMessage
               key={message.id}
               from={message.role === "user" ? "assistant" : "user"}
@@ -130,7 +174,7 @@ export const ConversationIdView = ({
             />
             <AIInputToolbar>
               <AIInputTools>
-                <AIInputButton>
+                <AIInputButton disabled={conversation?.status === "resolved"}>
                   <Wand2Icon />
                   <span>Enhance</span>
                 </AIInputButton>
