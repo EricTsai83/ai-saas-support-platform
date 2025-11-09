@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { ConvexReactClient, ConvexProvider } from "convex/react";
 import { Provider } from "jotai";
 
