@@ -67,14 +67,15 @@ export const ConversationIdView = ({
     defaultValues: {
       message: "",
     },
+    mode: "onChange",
   });
 
   const [isEnhancing, setIsEnhancing] = useState(false);
   const enhanceResponse = useAction(api.private.messages.enhanceResponse);
   const handleEnhanceResponse = async () => {
-    setIsEnhancing(true);
     const currentValue = form.getValues("message");
     if (!currentValue) return;
+    setIsEnhancing(true);
 
     try {
       const response = await enhanceResponse({

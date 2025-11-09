@@ -35,7 +35,7 @@ export const enhanceResponse = action({
         {
           role: "system",
           content:
-            "Enhance the operator's message to be more professional, clear, and helpful while maintaing their intent and key information.",
+            "Enhance the operator's message to be more professional, clear, and helpful while maintaining their intent and key information.",
         },
         {
           role: "user",
