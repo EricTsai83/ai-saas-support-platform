@@ -116,7 +116,7 @@ export const addFile = action({
       // SUPER IMPORTANT: namespace is What search space to add this to. You canot search across namespaces, If not added, it will be considered global.
       namespace: orgId,
       title: filename,
-      key: storageId,
+      key: filename,
       metadata: {
         storageId, //  Important for deletion
         filename,
